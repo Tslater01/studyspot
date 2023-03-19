@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/page-1/maingrouppage.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -37,8 +38,13 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.people),
-            title: const Text('Create Group'),
-            onTap: () => null,
+            title: const Text('Groups'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GroupsPage()),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(Icons.map),
