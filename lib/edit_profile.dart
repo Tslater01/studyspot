@@ -110,9 +110,9 @@ class _EditPageState extends State<EditPage> {
                 ),
               ),
               SizedBox(height: 30),
-              buildTextField("Full Name", "Ex. George Lucas", false),
-              buildTextField("Class Level", "Ex. Freshman", false),
-              buildTextField("Major", "Ex. Engineering", false),
+              buildTextField("Full Name", "Ex: Robert Jameson", false),
+              buildTextField("Class Level", "Ex: Freshman", false),
+              buildTextField("Major", "Ex: Engineering", false),
               buildTextField("Password", "*******", true),
               SizedBox(height: 30),
               Row(
@@ -249,21 +249,23 @@ class _EditPageState extends State<EditPage> {
                   },
                   icon: const Icon(
                     Icons.remove_red_eye,
-                    color: Color.fromRGBO(34, 73, 87, 1),
+                    color: Color.fromRGBO(229, 229, 229, 1),
                   ),
                 )
               : null,
           contentPadding: const EdgeInsets.only(bottom: 5),
+          filled: true,
+          fillColor: Color.fromRGBO(34, 73, 87, 1),
           labelText: labelText,
-          labelStyle: const TextStyle(
-            color: Color.fromRGBO(34, 73, 87, 1),
+          labelStyle: TextStyle(
+            color: Color.fromRGBO(32, 223, 127, 1),
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           hintText: placeholder,
           hintStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Color.fromRGBO(34, 73, 87, 1),
+            color: Color.fromRGBO(229, 229, 229, 1),
           ),
         ),
       ),
