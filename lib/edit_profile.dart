@@ -30,7 +30,12 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
+  final nameController = TextEditingController();
+  final classLevelController = TextEditingController();
+  final majorController = TextEditingController();
+  final passwordController = TextEditingController();
   bool isObscurePassword = true;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
