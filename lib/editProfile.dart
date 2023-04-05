@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ProfilePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -140,7 +141,15 @@ class _EditPageState extends State<EditPage> {
                           ),
                           actions: [
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         ProfilePage(title: 'ClassList'),
+                                //   ),
+                                // );
+                              },
                               child: Text("Continue"),
                               style: ElevatedButton.styleFrom(
                                 primary: Color.fromRGBO(34, 73, 87, 1),
@@ -194,7 +203,15 @@ class _EditPageState extends State<EditPage> {
                           ),
                           actions: [
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         ProfilePage(title: 'ClassList'),
+                                //   ),
+                                // );
+                              },
                               child: const Text("Continue"),
                               style: ElevatedButton.styleFrom(
                                 primary: Color.fromRGBO(34, 73, 87, 1),
