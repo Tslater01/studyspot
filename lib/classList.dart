@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'editClass.dart';
+import 'ProfilePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +40,7 @@ class _ClassListState extends State<ClassList> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(229, 229, 229, 1),
         title: Text(
-          'Edit Profile',
+          'Your Classes',
           style: TextStyle(
             color: Color.fromRGBO(34, 73, 87, 1),
           ),
@@ -61,74 +63,24 @@ class _ClassListState extends State<ClassList> {
           },
           child: ListView(
             children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            width: 4,
-                            color: Color.fromRGBO(34, 73, 87, 1),
-                          ),
-                          color: Color.fromRGBO(32, 223, 127, 1),
-                        ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Color.fromRGBO(229, 229, 229, 1),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("EGR789 - Class Example"),
+              ),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Exit without saving?'),
-                          backgroundColor: Color.fromRGBO(229, 229, 229, 1),
-                          content: const Text(
-                            'Hitting continue will return you to the previous screen, hit back to cancel.',
-                            style: TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2,
-                              color: Color.fromRGBO(34, 73, 87, 1),
-                            ),
-                          ),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: Text("Continue"),
-                              style: ElevatedButton.styleFrom(
-                                primary: Color.fromRGBO(34, 73, 87, 1),
-                                padding: EdgeInsets.symmetric(horizontal: 50),
-                              ),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("Back"),
-                              style: ElevatedButton.styleFrom(
-                                primary: Color.fromRGBO(34, 73, 87, 1),
-                                padding: EdgeInsets.symmetric(horizontal: 50),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         ProfilePage(title: 'Class List'),
+                      //   ),
+                      // );
                     },
                     child: Text(
                       "Back",
@@ -146,6 +98,32 @@ class _ClassListState extends State<ClassList> {
                       ),
                     ),
                   ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         EditClass(title: 'Edit Classes'),
+                      //   ),
+                      // );
+                    },
+                    child: Text(
+                      "Back",
+                      style: TextStyle(
+                        fontSize: 15,
+                        letterSpacing: 2,
+                        color: Color.fromRGBO(34, 73, 87, 1),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(34, 73, 87, 1),
+                      padding: EdgeInsets.symmetric(horizontal: 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  )
                 ],
               )
             ],
