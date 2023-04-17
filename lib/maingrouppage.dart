@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/page-1/createAGroup.dart';
 import 'package:myapp/page-1/navbar.dart';
 
-Color darkgreen = Color(0xFF20DF7F);
+Color darkgreen = const Color.fromRGBO(229, 229, 229, 1);
 
 class GroupsPage extends StatefulWidget {
   @override
@@ -14,8 +14,26 @@ class _GroupsPageState extends State<GroupsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Study Spot'),
+        title: const Center(
+          child: Text(
+            'Study Spot',
+            style: TextStyle(
+              color: Color.fromRGBO(34, 73, 87, 1),
+            ),
+          ),
+        ),
         backgroundColor: darkgreen,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.menu),
+              color: Color.fromRGBO(34, 73, 87, 1),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
+        ),
       ),
       drawer: NavBar(),
       body: Center(
