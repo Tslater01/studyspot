@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:map_launcher/map_launcher.dart';
 import 'package:floormap/NavBar.dart';
 
 void main() {
@@ -54,6 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: NavBar(),
       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets\page-1\images\egrstairs.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     primary: const Color(0xff224957), //change color
                   ),
                   onPressed: () {
+                    MapLauncherDemo;
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) {
                         return Floor1Page();
@@ -109,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     primary: Color(0xff224957), //change color
                   ),
                   onPressed: () {
+                    MapLauncherDemo;
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) {
                         return const Floor2Page();
@@ -130,6 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     primary: const Color(0xff224957), //change color
                   ),
                   onPressed: () {
+                    MapLauncherDemo;
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
@@ -169,7 +178,7 @@ class Floor1Page extends StatelessWidget {
       ),
       body: Container(
         child: Image.asset(
-          '.idea\floormapfloor1.png', // Replace with your image path
+          'assets/page-1/images/floor1.png', // Replace with your image path
           fit: BoxFit.cover,
         ),
       ),
@@ -194,7 +203,7 @@ class Floor2Page extends StatelessWidget {
       ),
       body: Container(
         child: Image.asset(
-          '.idea\floormapfloor2.png', // Replace with your image path
+          'assets/page-1/images/floor2.png', // Replace with your image path
           fit: BoxFit.cover,
         ),
       ),
@@ -210,18 +219,73 @@ class Floor3Page extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Floor 3',
-            style: TextStyle(color: Color.fromRGBO(34, 73, 87, 1)),
-          ),
+        backgroundColor: darkgreen,
+        centerTitle: true,
+        title: const Text(
+          'Floor 3',
+          style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Container(
+      body: Center(
         child: Image.asset(
-          '.idea\floormapfloor3.png', // Replace with your image path
+          'assets/page-1/images/floor3.png',
           fit: BoxFit.cover,
         ),
+      ),
+    );
+  }
+}
+
+class MapLauncherDemo extends StatelessWidget {
+  openMapsSheet(context) async {
+    try {
+      final coords = Coords(37.759392, -122.5107336);
+      final title = "Ocean Beach";
+      final availableMaps = await MapLauncher.installedMaps;
+
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () => map.showMarker(
+                          coords: coords,
+                          title: title,
+                        ),
+                        title: Text(map.mapName),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Map Launcher'),
+        ),
+        body: Center(child: Builder(
+          builder: (context) {
+            return MaterialButton(
+              onPressed: () => openMapsSheet(context),
+              child: Text('Show Maps'),
+            );
+          },
+        )),
       ),
     );
   }
