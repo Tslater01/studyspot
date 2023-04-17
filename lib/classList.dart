@@ -67,6 +67,9 @@ class _ClassListState extends State<ClassList> {
               ElevatedButton(
                 onPressed: () {},
                 child: Text("EGR789 - Class Example"),
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xff224957),
+                ),
               ),
               SizedBox(height: 30),
               Row(
@@ -74,13 +77,13 @@ class _ClassListState extends State<ClassList> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         ProfilePage(title: 'Class List'),
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const ProfilePage(title: 'Profile Page');
+                          },
+                        ),
+                      );
                     },
                     child: Text(
                       "Back",
@@ -109,11 +112,11 @@ class _ClassListState extends State<ClassList> {
                       // );
                     },
                     child: Text(
-                      "Back",
+                      "Add Class",
                       style: TextStyle(
                         fontSize: 15,
                         letterSpacing: 2,
-                        color: Color.fromRGBO(34, 73, 87, 1),
+                        color: const Color.fromRGBO(229, 229, 229, 1),
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
