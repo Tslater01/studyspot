@@ -1,11 +1,17 @@
+import 'dart:typed_data';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'navbar.dart';
+import 'classList.dart';
+import 'editProfile.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,120 +21,249 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Profile'),
+      home: const ProfilePage(title: 'Profile Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 0;
-  String userName = 'Bob';
-  String classYear = 'Junior';
-  String userMajor = 'Engineering';
+  String userName = 'Tyler Slater';
+  String classYear = 'Year: Senior';
+  String userMajor = 'Major: Computer Science';
+  ImageProvider? _profileImage;
+
+  Future<Uint8List?> pickImage(ImageSource source) async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? imageFile = await _picker.pickImage(source: source);
+
+    if (imageFile != null) {
+      return await imageFile.readAsBytes();
+    }
+    return null;
+  }
+
+  void showSnackBar(String message, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  Future<void> _handleImageSelection(ImageSource source) async {
+    final Uint8List? imageData = await this.pickImage(source);
+    if (imageData != null) {
+      setState(() {
+        _profileImage = MemoryImage(imageData);
+      });
+    } else {
+      this.showSnackBar('Error picking image. Please try again.', context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(63, 208, 201, 50),
-        title: Center(
-          child: Text(widget.title,
-              style: const TextStyle(color: Color.fromRGBO(34, 73, 87, 1))),
-        ),
-      ),
-      body: Container(
-        child: currentIndex == 0
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(userName, style: const TextStyle(color: Colors.black)),
-                    Text(classYear,
-                        style: const TextStyle(color: Colors.black)),
-                    Text(userMajor,
-                        style: const TextStyle(color: Colors.black)),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(57, 161, 96, 20)),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return classesPage();
-                          }));
-                        },
-                        child: const Text('Classes',
-                            style: TextStyle(color: Colors.black))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(57, 161, 96, 20)),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return extraCurricularsPage();
-                          }));
-                        },
-                        child: const Text('Extra Curriculars',
-                            style: TextStyle(color: Colors.black))),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(57, 161, 96, 20)),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return editPage();
-                          }));
-                        },
-                        child: const Text('Edit',
-                            style: TextStyle(color: Colors.black)))
-                  ],
-                ),
-              )
-            : Center(
-                child: Container(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary:
-                                    const Color.fromRGBO(63, 208, 201, 50)),
-                            onPressed: () {},
-                            child: const Icon(Icons.filter_list_rounded,
-                                color: Colors.black)),
-                        const Text('Under construction, come back later')
-                      ]),
-                ),
+        backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(Icons.menu),
+                color: Color.fromRGBO(34, 73, 87, 1),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
+          title: Center(
+            child: Text(
+              widget.title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Color.fromRGBO(34, 73, 87, 1),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Color.fromRGBO(63, 208, 201, 50),
-          items: const [
-            BottomNavigationBarItem(
-                label: 'Profile',
-                icon: Icon(Icons.account_circle_rounded, color: Colors.black)),
-            BottomNavigationBarItem(
-                label: 'Friends',
-                icon: Icon(Icons.supervised_user_circle_rounded,
-                    color: Colors.pink)),
-          ],
-          currentIndex: currentIndex,
-          onTap: (int index) {
-            setState(() {
-              currentIndex = index;
-            });
-          }),
-    );
+            ),
+          ),
+        ),
+        drawer: NavBar(),
+        body: Container(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Wrap(
+                            children: <Widget>[
+                              ListTile(
+                                leading: Icon(Icons.camera_alt),
+                                title: Text('Take a photo'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  _handleImageSelection(ImageSource.camera);
+                                },
+                              ),
+                              ListTile(
+                                leading: Icon(Icons.photo_library),
+                                title: Text('Choose from gallery'),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  _handleImageSelection(ImageSource.gallery);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 70,
+                      backgroundImage: _profileImage ??
+                          AssetImage('assets/page-1/images/TylerPFP.jpg'),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    userName,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                    classYear,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    userMajor,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  SizedBox(
+                    width: 250,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color(0xff224957),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const ClassList(title: 'Class List');
+                            },
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Classes',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    width: 250,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xff224957),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const ClassList(title: 'Class List');
+                            },
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Friends',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  // SizedBox(
+                  //   width: 250,
+                  //   height: 50,
+                  //   child: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //       primary: const Color(0xff224957),
+                  //     ),
+                  //     onPressed: () {
+                  //       Navigator.of(context).push(
+                  //         MaterialPageRoute(
+                  //           builder: (BuildContext context) {
+                  //             return extraCurricularsPage();
+                  //           },
+                  //         ),
+                  //       );
+                  //     },
+                  //     child: const Text(
+                  //       'Extra Curriculars',
+                  //       style: TextStyle(color: Colors.white),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: 100),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      width: 150,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color(0xff224957),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditPage(title: 'Profile'),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Edit Profile',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 
@@ -142,42 +277,39 @@ class classesPage extends StatelessWidget {
         appBar: AppBar(
             title: const Center(
                 child: Text('Classes',
-                    style:
-                        TextStyle(color: Color.fromRGBO(34, 73, 87, 1))))),
+                    style: TextStyle(color: Color.fromRGBO(34, 73, 87, 1))))),
         body: Container(
           child: Text('Under construction, check back later'),
         ));
   }
 }
 
-class extraCurricularsPage extends StatelessWidget {
-  const extraCurricularsPage({Key? key}) : super(key: key);
+// class extraCurricularsPage extends StatelessWidget {
+//   const extraCurricularsPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
-        appBar: AppBar(
-            title: const Center(
-                child: Text('Extra Curriculars',
-                    style:
-                        TextStyle(color: Color.fromRGBO(34, 73, 87, 1))))),
-        body: Container(child: Text('Under construction, check back later')));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
+//         appBar: AppBar(
+//             title: const Center(
+//                 child: Text('Extra Curriculars',
+//                     style: TextStyle(color: Color.fromRGBO(34, 73, 87, 1))))),
+//         body: Container(child: Text('Under construction, check back later')));
+//   }
+// }
 
-class editPage extends StatelessWidget {
-  const editPage({Key? key}) : super(key: key);
+// class friendsPage extends StatelessWidget {
+//   const friendsPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
-        appBar: AppBar(
-            title: const Center(
-                child: Text('Edit Profile',
-                    style:
-                        TextStyle(color: Color.fromRGBO(34, 73, 87, 1))))),
-        body: Container(child: Text('Under construction, check back later')));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
+//         appBar: AppBar(
+//             title: const Center(
+//                 child: Text('Extra Curriculars',
+//                     style: TextStyle(color: Color.fromRGBO(34, 73, 87, 1))))),
+//         body: Container(child: Text('Under construction, check back later')));
+//   }
+// }
