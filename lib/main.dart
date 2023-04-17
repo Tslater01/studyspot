@@ -1,6 +1,9 @@
+import 'package:floormap/maplauncher.dart';
 import 'package:flutter/material.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:floormap/NavBar.dart';
+
+Color darkgreen = Color(0xFF20DF7F);
 
 void main() {
   runApp(const MyApp());
@@ -38,25 +41,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Color.fromRGBO(34, 73, 87, 1)),
-        //here is the problem
-        title: Center(
-          child: Text(widget.title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Color.fromRGBO(34, 73, 87, 1))),
+        backgroundColor: darkgreen,
+        iconTheme:
+            IconThemeData(color: Colors.white), // Change icon color to white
+        title: Text(
+          widget.title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Lexend Deca',
+            fontSize: 24,
+            color: Color.fromRGBO(255, 255, 255, 1),
+          ),
         ),
       ),
       drawer: NavBar(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets\page-1\images\egrstairs.jpg'),
+            image: AssetImage('assets/page-1/images/egrstairs.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -69,22 +73,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
               ),
               const SizedBox(height: 60),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
                 ),
               ),
               const SizedBox(height: 40),
-              Text(
-                currentBuilding,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  currentBuilding,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
                 ),
               ),
+              const SizedBox(height: 40),
               SizedBox(height: 40),
               SizedBox(
                 width: 250,
@@ -94,16 +114,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     primary: const Color(0xff224957), //change color
                   ),
                   onPressed: () {
-                    MapLauncherDemo;
+                    //insert map launcher
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return Floor1Page();
+                        return MapLauncherDemo();
                       },
                     ));
                   },
                   child: const Text(
                     'Floor 1',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),
@@ -116,16 +136,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     primary: Color(0xff224957), //change color
                   ),
                   onPressed: () {
-                    MapLauncherDemo;
+                    //insert map launcher
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return const Floor2Page();
+                        return MapLauncherDemo();
                       },
                     ));
                   },
                   child: const Text(
                     'Floor 2',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),
@@ -138,18 +158,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     primary: const Color(0xff224957), //change color
                   ),
                   onPressed: () {
-                    MapLauncherDemo;
+                    //insert map launcher here
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return Floor3Page();
+                          return MapLauncherDemo();
                         },
                       ),
                     );
                   },
                   child: const Text(
                     'Floor 3',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),
@@ -169,16 +189,16 @@ class Floor1Page extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Floor 1',
-            style: TextStyle(color: Color.fromRGBO(34, 73, 87, 1)),
-          ),
+        backgroundColor: darkgreen,
+        centerTitle: true,
+        title: const Text(
+          'Floor 1',
+          style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Container(
+      body: Center(
         child: Image.asset(
-          'assets/page-1/images/floor1.png', // Replace with your image path
+          'assets/page-1/images/floor1.png',
           fit: BoxFit.cover,
         ),
       ),
@@ -194,16 +214,16 @@ class Floor2Page extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(229, 229, 229, 1),
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Floor 2',
-            style: TextStyle(color: Color.fromRGBO(34, 73, 87, 1)),
-          ),
+        backgroundColor: darkgreen,
+        centerTitle: true,
+        title: const Text(
+          'Floor 2',
+          style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Container(
+      body: Center(
         child: Image.asset(
-          'assets/page-1/images/floor2.png', // Replace with your image path
+          'assets/page-1/images/floor2.png',
           fit: BoxFit.cover,
         ),
       ),
@@ -231,61 +251,6 @@ class Floor3Page extends StatelessWidget {
           'assets/page-1/images/floor3.png',
           fit: BoxFit.cover,
         ),
-      ),
-    );
-  }
-}
-
-class MapLauncherDemo extends StatelessWidget {
-  openMapsSheet(context) async {
-    try {
-      final coords = Coords(37.759392, -122.5107336);
-      final title = "Ocean Beach";
-      final availableMaps = await MapLauncher.installedMaps;
-
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SafeArea(
-            child: SingleChildScrollView(
-              child: Container(
-                child: Wrap(
-                  children: <Widget>[
-                    for (var map in availableMaps)
-                      ListTile(
-                        onTap: () => map.showMarker(
-                          coords: coords,
-                          title: title,
-                        ),
-                        title: Text(map.mapName),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Map Launcher'),
-        ),
-        body: Center(child: Builder(
-          builder: (context) {
-            return MaterialButton(
-              onPressed: () => openMapsSheet(context),
-              child: Text('Show Maps'),
-            );
-          },
-        )),
       ),
     );
   }
