@@ -1,18 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'auth.dart';
+import 'package:myapp/page-1/joingroup.dart';
+import 'package:myapp/page-1/bobsmaingrouppage.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
+
 class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  void _signUp() {
-    // Implement your sign-up logic here
-    // After successful sign-up, navigate to the main menu
-    Navigator.pushNamed(context, '/mainMenu');
+void _SignUp() async {
+  try {
+    bool loggedIn = Provider.of<Auth>(context, listen: false)
+        .login(_emailController.text, _passwordController.text);
+    if (loggedIn) {
+      if (_emailController.text == 'bob@gmail.com') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => BobsPage()),
+        );
+      } else {
+        Navigator.pushReplacementNamed(context, '/groupsPage');
+      }
+    } else {
+      throw Exception('Invalid email or password');
+    }
+  } catch (error) {
+    // Show error message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error.toString()),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
+}
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +55,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 120),
-              Text(
-                'Sign Up',
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+              SizedBox(height: 60),
+              Center(
+                child: Image.asset(
+                  'assets/page-1/images/studyspotlogo.png',
+                  width: 300,
+                  height: 200,
+                ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 10),
+              Text(
+                'Login and find your Study Spot!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22, fontFamily: 'Lexend Deca', color: Color(0xFF224957)),
+              ),
+              SizedBox(height: 40),
               TextField(
                 controller: _emailController,
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Color(0xff224957),
@@ -46,6 +89,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 20),
               TextField(
+                controller: _passwordController,
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Color(0xff224957),
@@ -61,8 +106,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 40),
               ElevatedButton(
-                onPressed: _signUp,
-                child: Text('SIGN UP'),
+                onPressed: () => _SignUp(),
+                child: Text('LOG IN'),
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xff20df7f),
                   onPrimary: Colors.white,
