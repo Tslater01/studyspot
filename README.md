@@ -1,3 +1,3 @@
 Study Spot!
-The Best Way to find someone to Study with :)
+The #1 way to find someone to study with :)
 
