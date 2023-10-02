@@ -22,4 +22,4 @@ Studying alone can be challenging, and finding the perfect spot on campus can be
 
 ## How to Use
 
-To get started with Study Spot, simply message Tyler Slater at tylerc.slater@calbaptist.edu to have a personalized walk through of the codebase and installing Study Spot!
+To get started with Study Spot, simply message Tyler Slater at tylerc.slater@calbaptist.edu to have a personalized walk through of the codebase and assistance in installing Study Spot!
