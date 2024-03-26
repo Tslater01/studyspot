@@ -1,4 +1,4 @@
-# Study Spot - Find Your Perfect Study Partner
+# Study Spot - Find Your Perfect Study Partne
 
 Welcome to the Study Spot mobile app repository! This project was developed as part of the EGR302 (Junior Design and Documentation) course by our dedicated team of 5 during the 2023 Spring Semester. Study Spot is designed to make your campus study experience more collaborative and efficient
 
